@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/AlbumPage.dart';
+import 'package:project/ArtistPage.dart';
 import 'package:project/Homepage.dart';
 
 void main() {
@@ -23,6 +25,8 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: {
         '/': (context) => const HomePage(),
+        '/artist': (context) => const ArtistPage(),
+        '/album': (context) => const AlbumPage()
       }
     );
   }

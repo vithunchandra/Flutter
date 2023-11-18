@@ -1,5 +1,6 @@
-import 'package:project/Class/Album.dart';
-import 'package:project/Class/Track.dart';
+
+import 'package:project/class/Album.dart';
+import 'package:project/class/Track.dart';
 
 class Artist{
   final String name;
