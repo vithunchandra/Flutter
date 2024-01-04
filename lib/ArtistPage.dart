@@ -5,6 +5,8 @@ import 'package:project/class/Track.dart';
 import 'package:project/Style.dart';
 import 'package:project/component/BottomBar.dart';
 import 'package:project/component/TrackList.dart';
+import 'package:project/provider/playing_track.dart';
+import 'package:provider/provider.dart';
 
 class ArtistPage extends StatefulWidget {
   const ArtistPage({super.key});
@@ -15,13 +17,11 @@ class ArtistPage extends StatefulWidget {
 
 class _ArtistPageState extends State<ArtistPage> {
   late Artist artist;
-  Track? playedTrack;
 
   @override
   Widget build(BuildContext context) {
     var data = ModalRoute.of(context)?.settings.arguments as dynamic;
     artist = data?['artist'];
-    playedTrack = playedTrack ?? data?['playedTrack'];
 
     return Scaffold(
       appBar: AppBar(
@@ -34,92 +34,82 @@ class _ArtistPageState extends State<ArtistPage> {
           ),
         ),
       ),
-      body: WillPopScope(
-        onWillPop: () async{
-          Navigator.pop(context, playedTrack);
-          return false;
-        },
-        child: Stack(
-          children: <Widget>[
-            SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ArtistImage(artist, context),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    const Icon(Icons.people, size: 25,),
-                                    const SizedBox(width: 4,),
-                                    Text(
-                                      artist.listeners.toString(),
-                                      style: const TextStyle(
-                                          fontSize: 16
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(height: 4,),
-                                OutlinedButton(
-                                  onPressed: (){},
-                                  style: OutlinedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(8)
-                                      )
-                                  ),
-                                  child: const Text('Follow'),
-                                )
-                              ],
-                            ),
-                            IconButton(
-                              onPressed: (){},
-                              icon: const Icon(Icons.play_arrow, size: 40,),
-                              style: IconButton.styleFrom(
-                                  backgroundColor: Colors.lime[700]
+      body: Stack(
+        children: <Widget>[
+          SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ArtistImage(artist, context),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  const Icon(Icons.people, size: 25,),
+                                  const SizedBox(width: 4,),
+                                  Text(
+                                    artist.listeners.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 16
+                                    ),
+                                  )
+                                ],
                               ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 24,),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text('Popular Album', style: headingStyle(),),
-                        ),
-                        const SizedBox(height: 8,),
-                        popularAlbum(artist.albums),
-                        const SizedBox(height: 24,),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text('Popular Songs', style: headingStyle(),),
-                        ),
-                        const SizedBox(height: 8,),
-                        trackList(artist.tracks, context, (Track track){
-                          setState(() {
-                            playedTrack = track;
-                          });
-                        }),
-                      ],
-                    ),
+                              const SizedBox(height: 4,),
+                              OutlinedButton(
+                                onPressed: (){},
+                                style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)
+                                    )
+                                ),
+                                child: const Text('Follow'),
+                              )
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: (){},
+                            icon: const Icon(Icons.play_arrow, size: 40,),
+                            style: IconButton.styleFrom(
+                                backgroundColor: Colors.lime[700]
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(height: 24,),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Popular Album', style: headingStyle(),),
+                      ),
+                      const SizedBox(height: 8,),
+                      popularAlbum(artist.albums),
+                      const SizedBox(height: 24,),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Popular Songs', style: headingStyle(),),
+                      ),
+                      const SizedBox(height: 8,),
+                      trackList(artist.tracks, context),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            if(playedTrack != null)
-              BottomBar(track: playedTrack!, context: context)
-          ],
-        ),
-      )
+          ),
+          if(context.watch<PlayingTrack>().playingTrack != null)
+            const BottomBar()
+        ],
+      ),
     );
   }
 }

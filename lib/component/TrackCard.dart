@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project/class/Track.dart';
+import 'package:project/provider/playing_track.dart';
+import 'package:provider/provider.dart';
 
-Widget trackCard(Track track, BuildContext context, action){
+Widget trackCard(Track track, BuildContext context){
   return Padding(
     padding: EdgeInsets.symmetric(vertical: 4),
     child: Row(
@@ -14,7 +16,7 @@ Widget trackCard(Track track, BuildContext context, action){
             return Container(
               width: 60,
               height: 60,
-              child: Icon(Icons.error),
+              child: const Icon(Icons.error),
             );
           },
         ),
@@ -47,7 +49,9 @@ Widget trackCard(Track track, BuildContext context, action){
           child: Align(
             alignment: Alignment.centerRight,
             child: IconButton(
-              onPressed: action,
+              onPressed: (){
+                context.read<PlayingTrack>().setPlayingTrack(track);
+              },
               icon: const Icon(Icons.play_arrow, size: 30,),
             ),
           )

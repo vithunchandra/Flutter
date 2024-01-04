@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:project/Style.dart';
 import 'package:project/class/Artist.dart';
 import 'package:project/class/Track.dart';
+import 'package:project/provider/playing_track.dart';
+import 'package:provider/provider.dart';
 
 class SongList extends StatefulWidget {
-  final dynamic action;
-  const SongList({super.key, required this.action});
+  const SongList({super.key});
 
   @override
   State<SongList> createState() => _SongListState();
@@ -26,13 +27,9 @@ class _SongListState extends State<SongList> {
 
           final songs = <Widget>[];
           for(int i=0; i<artists.length; i++){
-            songs.add(songCard(
-                artists[i],
-                context,
-                (Track track){
-                  widget.action(track);
-                }
-            ));
+            songs.add(
+                songCard(artists[i], context)
+            );
           }
 
           return Column(
@@ -46,7 +43,7 @@ class _SongListState extends State<SongList> {
   }
 }
 
-Widget songCard(Artist artist, BuildContext context, action){
+Widget songCard(Artist artist, BuildContext context){
   return Container(
     decoration: BoxDecoration(
       color: const Color.fromARGB(150, 120, 199, 25),
@@ -101,7 +98,7 @@ Widget songCard(Artist artist, BuildContext context, action){
                 alignment: Alignment.topRight,
                 child: IconButton(
                     onPressed: (){
-                      action(artist.tracks[0]);
+                      context.read<PlayingTrack>().setPlayingTrack(artist.tracks[0]);
                     },
                     icon: const Icon(Icons.play_arrow),
                   iconSize: 35,

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:project/class/Track.dart';
+import 'package:project/provider/playing_track.dart';
+import 'package:provider/provider.dart';
 
 class BottomBar extends StatelessWidget {
-  final Track track;
-  final BuildContext context;
-  const BottomBar({super.key, required this.track, required this.context});
+  const BottomBar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Track? playingTrack = context.watch<PlayingTrack>().playingTrack;
     return Positioned(
       bottom: 0,
       child: Container(
@@ -22,7 +23,7 @@ class BottomBar extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
-                track.image,
+                playingTrack!.image,
                 width: 55,
                 isAntiAlias: true,
                 errorBuilder: (BuildContext context, Object exception, StackTrace ?stackTrace) {
@@ -43,7 +44,7 @@ class BottomBar extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    track.name,
+                    playingTrack!.name,
                     style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -52,7 +53,7 @@ class BottomBar extends StatelessWidget {
                   ),
                   SizedBox(height: 4,),
                   Text(
-                    track.playcount.toString(),
+                    playingTrack!.playcount.toString(),
                     style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[350]

@@ -5,6 +5,8 @@ import 'package:project/component/AlbumList.dart';
 import 'package:project/component/ArtistList.dart';
 import 'package:project/component/BottomBar.dart';
 import 'package:project/component/SongList.dart';
+import 'package:project/provider/playing_track.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Track? playedTrack = null;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,14 +44,7 @@ class _HomePageState extends State<HomePage> {
                       style: headingStyle(),
                     ),
                     const SizedBox(height: 4,),
-                    ArtistList(
-                      setPlayedTrack: (Track track){
-                        setState(() {
-                          playedTrack = track;
-                        });
-                      },
-                      playedTrack: playedTrack,
-                    ),
+                    const ArtistList(),
                     const SizedBox(height:32,),
                     const Text(
                       'Best Albums',
@@ -61,32 +54,19 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     const SizedBox(height: 8,),
-                    AlbumList(
-                      setPlayedTrack: (Track track){
-                        setState(() {
-                          playedTrack = track;
-                        });
-                      },
-                      playedTrack: playedTrack,
-                    ),
+                    const AlbumList(),
                     const SizedBox(height: 32,),
                     Text(
                       'Best Songs For You',
                       style: headingStyle(),
                     ),
-                    SongList(
-                      action: (Track track){
-                        setState(() {
-                          playedTrack = track;
-                        });
-                      },
-                    )
+                    const SongList()
                   ],
                 ),
               ),
             ),
-            if(playedTrack != null)
-              BottomBar(track: playedTrack!, context: context)
+            if(context.watch<PlayingTrack>().playingTrack != null)
+              const BottomBar()
           ],
         )
       ),

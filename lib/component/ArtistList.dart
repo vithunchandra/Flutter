@@ -5,9 +5,7 @@ import 'package:project/class/Artist.dart';
 import 'package:project/class/Track.dart';
 
 class ArtistList extends StatefulWidget {
-  final dynamic setPlayedTrack;
-  final Track? playedTrack;
-  const ArtistList({super.key, required this.setPlayedTrack, required this.playedTrack});
+  const ArtistList({super.key});
 
 
   @override
@@ -33,17 +31,17 @@ class _ArtistListState extends State<ArtistList> {
               children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Expanded(child: artistCard(artists[0], context, widget.playedTrack, widget.setPlayedTrack),),
+                    Expanded(child: artistCard(artists[0], context),),
                     const SizedBox(width: 8),
-                    Expanded(child: artistCard(artists[1], context, widget.playedTrack, widget.setPlayedTrack)),
+                    Expanded(child: artistCard(artists[1], context)),
                   ],
                 ),
                 const SizedBox(height: 8,),
                 Row(
                   children: <Widget>[
-                    Expanded(child: artistCard(artists[2], context, widget.playedTrack, widget.setPlayedTrack)),
+                    Expanded(child: artistCard(artists[2], context)),
                     const SizedBox(width: 8),
-                    Expanded(child: artistCard(artists[3], context, widget.playedTrack, widget.setPlayedTrack)),
+                    Expanded(child: artistCard(artists[3], context)),
                   ],
                 )
               ],
@@ -56,14 +54,12 @@ class _ArtistListState extends State<ArtistList> {
   }
 }
 
-Widget artistCard(Artist artist, BuildContext context, Track? playedTrack, setPlayedTrack){
+Widget artistCard(Artist artist, BuildContext context){
   return GestureDetector(
     onTap: () async{
       var result = await Navigator.pushNamed(context, '/artist', arguments: {
-        'artist': artist,
-        'playedTrack': playedTrack
+        'artist': artist
       });
-      setPlayedTrack(result);
     },
     child: Container(
         decoration: const BoxDecoration(

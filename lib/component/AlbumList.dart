@@ -6,9 +6,7 @@ import 'package:project/class/AlbumTracks.dart';
 import 'package:project/Style.dart';
 
 class AlbumList extends StatefulWidget {
-  final dynamic setPlayedTrack;
-  final Track? playedTrack;
-  const AlbumList({super.key, required this.setPlayedTrack, required this.playedTrack});
+  const AlbumList({super.key});
 
   @override
   State<AlbumList> createState() => _AlbumListState();
@@ -27,14 +25,8 @@ class _AlbumListState extends State<AlbumList> {
             final albumCards = <Widget>[];
             for(int i=0; i<albums.length; i++){
               albumCards.add(
-                  albumCard(
-                    albums[i],
-                    context,
-                    (Track track){
-                      widget.setPlayedTrack(track);
-                    },
-                    widget.playedTrack
-              ));
+                  albumCard(albums[i], context,)
+              );
             }
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -51,14 +43,12 @@ class _AlbumListState extends State<AlbumList> {
   }
 }
 
-Widget albumCard(AlbumTracks album, BuildContext context, setPlayedTrack, Track? playedTrack){
+Widget albumCard(AlbumTracks album, BuildContext context){
   return GestureDetector(
-    onTap: () async{
-      var result = await Navigator.pushNamed(context, '/album', arguments: {
-        'album': album,
-        'playedTrack': playedTrack
+    onTap: (){
+      Navigator.pushNamed(context, '/album', arguments: {
+        'album': album
       });
-      setPlayedTrack(result);
     },
     child: Container(
       width: 170,
