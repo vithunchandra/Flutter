@@ -13,11 +13,7 @@ Widget trackCard(Track track, BuildContext context){
           width: 60,
           isAntiAlias: true,
           errorBuilder: (BuildContext context, Object exception, StackTrace ?stackTrace) {
-            return Container(
-              width: 60,
-              height: 60,
-              child: const Icon(Icons.error),
-            );
+            return Image.asset('assets/mockup.jpg', width: 60, isAntiAlias: true);
           },
         ),
         const SizedBox(width: 8,),
@@ -36,10 +32,10 @@ Widget trackCard(Track track, BuildContext context){
                 ),
               ),
               Text(
-                track.playcount.toString(),
-                style: TextStyle(
+                track.album,
+                style: const TextStyle(
                     fontSize: 18,
-                    color: Colors.grey[350]
+                    color: Colors.blueGrey
                 ),
               )
             ],

@@ -3,11 +3,11 @@ import 'package:project/class/Track.dart';
 
 class AlbumTracks extends Album{
   final List<Track> tracks;
-  final String artist;
 
   AlbumTracks({
     required this.tracks,
-    required this.artist,
+    required super.mbid,
+    required super.artist,
     required super.name,
     required super.url,
     required super.image,
@@ -19,6 +19,7 @@ class AlbumTracks extends Album{
     List<Track> tracks = trackList.map((i) => Track.fromJson(i)).toList();
     return AlbumTracks(
         tracks: tracks,
+        mbid: parsedJson['mbid'],
         artist: parsedJson['artist'],
         name: parsedJson['name'],
         url: parsedJson['url'],

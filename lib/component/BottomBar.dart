@@ -14,7 +14,7 @@ class BottomBar extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.1,
-        padding: EdgeInsets.all(8),
+        padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.redAccent,
         ),
@@ -27,11 +27,7 @@ class BottomBar extends StatelessWidget {
                 width: 55,
                 isAntiAlias: true,
                 errorBuilder: (BuildContext context, Object exception, StackTrace ?stackTrace) {
-                  return Container(
-                    width: 60,
-                    height: 60,
-                    child: const Icon(Icons.error),
-                  );
+                  return Image.asset('assets/mockup.jpg', width: 55, isAntiAlias: true);
                 },
               ),
             ),
@@ -51,9 +47,9 @@ class BottomBar extends StatelessWidget {
                         overflow: TextOverflow.ellipsis
                     ),
                   ),
-                  SizedBox(height: 4,),
+                  const SizedBox(height: 4,),
                   Text(
-                    playingTrack!.playcount.toString(),
+                    playingTrack!.artist,
                     style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey[350]

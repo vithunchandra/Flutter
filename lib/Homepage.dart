@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.only(top: 8, left: 8, right: 8, bottom: MediaQuery.of(context).size.height * 0.1),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
