@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/firebase_service/authentication.dart';
@@ -14,6 +15,20 @@ class _SigninState extends State<Signin> {
   var emailInputController = TextEditingController();
   var passwordInputController = TextEditingController();
   var errorText = '';
+
+  Future<void> insertfavorite() async {
+    print("start insrt fav");
+    FirebaseFirestore refbaru = FirebaseFirestore.instance;
+    String uid = FirebaseAuth.instance.currentUser!.uid.toString();
+    print("2");
+    print(uid);
+    DocumentReference ref = await refbaru.collection("favorite").add({
+      'uid': "kenneth@gmail.com",
+      'track': 3,
+    });
+    print("end insrt fav");
+    return;
+  }
 
   Future<void> login() async {
     String email = emailInputController.text;
@@ -103,9 +118,10 @@ class _SigninState extends State<Signin> {
                           )
                       )
                   ),
-                  child: const Text("Register"),
+                  child: const Text("Login"),
                 ),
               ),
+
               Center(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
