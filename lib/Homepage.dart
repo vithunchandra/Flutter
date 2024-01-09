@@ -8,6 +8,8 @@ import 'package:project/component/SongList.dart';
 import 'package:project/provider/playing_track.dart';
 import 'package:provider/provider.dart';
 
+import 'FavoritePage.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -29,6 +31,23 @@ class _HomePageState extends State<HomePage> {
               fontWeight: FontWeight.bold
           ),
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FavoritePage()),
+              );
+            },
+            child: Row(
+              children: [
+                Icon(Icons.favorite),
+                Text('Favorite'),
+              ],
+            ),
+          ),
+        ],
+
       ),
       body: SafeArea(
         child: Stack(
