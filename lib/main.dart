@@ -50,7 +50,6 @@ class _MyAppState extends State<MyApp> {
         '/artist': (context) => const ArtistPage(),
         '/album': (context) => const AlbumPage()
       },
-      debugShowCheckedModeBanner: false,
     );
   }
 }
